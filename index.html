@@ -9,37 +9,42 @@
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
     background: #ffccd5;
-    overflow: hidden;
+    overflow-x: hidden;
   }
 
   section {
-    display: none;
     width: 100vw;
-    height: 100vh;
     text-align: center;
     color: white;
+    padding: 20px;
   }
 
-  /* ---------- INTRO SLIDES ---------- */
+  /* ---------- MEMORY PHOTOS ---------- */
   #intro {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
     justify-content: center;
-    background: black;
+    gap: 10px;
+    background: linear-gradient(#ff9a9e, #fad0c4);
+    padding: 40px 20px;
   }
 
   #intro img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 250px;
+    height: 250px;
     object-fit: cover;
-    transition: opacity 0.5s ease-in-out;
-    opacity: 1;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s;
+  }
+
+  #intro img:hover {
+    transform: scale(1.05);
   }
 
   /* ---------- MESSAGE PAGE ---------- */
   #message {
-    display: flex;
+    display: none; /* will show after delay or click */
     flex-direction: column;
     justify-content: center;
     padding: 40px;
@@ -86,11 +91,12 @@
 
   /* ---------- CELEBRATION ---------- */
   #celebrate {
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
     background: radial-gradient(circle, #ff4d6d, #c9184a);
     overflow: hidden;
+    height: 100vh;
   }
 
   #celebrate h1 {
@@ -108,14 +114,22 @@
     left: 0;
     pointer-events: none;
   }
+
 </style>
 </head>
 
 <body>
 
-<!-- INTRO -->
+<!-- MEMORY PHOTOS -->
 <section id="intro">
-  <img id="slide" />
+  <img src="images/photo1.jpg" alt="Memory 1">
+  <img src="images/photo2.jpg" alt="Memory 2">
+  <img src="images/photo3.jpg" alt="Memory 3">
+  <img src="images/photo4.jpg" alt="Memory 4">
+  <img src="images/photo5.jpg" alt="Memory 5">
+  <img src="images/photo6.jpg" alt="Memory 6">
+  <img src="images/photo7.jpg" alt="Memory 7">
+  <img src="images/photo8.jpg" alt="Memory 8">
 </section>
 
 <!-- MESSAGE -->
@@ -142,45 +156,11 @@
 </section>
 
 <script>
-  /* ---------- SLIDESHOW ---------- */
-  const images = [
-    "images/photo1.jpg",
-    "images/photo2.jpg",
-    "images/photo3.jpg",
-    "images/photo4.jpg",
-    "images/photo5.jpg",
-    "images/photo6.jpg",
-    "images/photo7.jpg",
-    "images/photo8.jpg"
-  ];
-
-  let index = 0;
-  const slide = document.getElementById("slide");
-  const intro = document.getElementById("intro");
+  /* ---------- SHOW MESSAGE AFTER 3 SECONDS ---------- */
   const message = document.getElementById("message");
-
-  intro.style.display = "flex";
-  message.style.display = "none";
-
-  slide.src = images[index];
-
-  const slideshow = setInterval(() => {
-    index++;
-
-    if (index >= images.length) {
-      clearInterval(slideshow);
-      intro.style.display = "none";
-      message.style.display = "flex";
-      return;
-    }
-
-    slide.style.opacity = 0;
-    setTimeout(() => {
-      slide.src = images[index];
-      slide.style.opacity = 1;
-    }, 300);
-
-  }, 1500); // change duration here if you want
+  setTimeout(() => {
+    message.style.display = "flex";
+  }, 3000); // 3 seconds after page load, change if you want
 
   /* ---------- NO BUTTON RUNS ---------- */
   const noBtn = document.getElementById("no");
@@ -194,7 +174,7 @@
 
   /* ---------- YES BUTTON ---------- */
   document.getElementById("yes").onclick = () => {
-    message.style.display = "none";
+    document.getElementById("message").style.display = "none";
     document.getElementById("celebrate").style.display = "flex";
     startConfetti();
   };
@@ -232,4 +212,5 @@
 
 </body>
 </html>
+
 
